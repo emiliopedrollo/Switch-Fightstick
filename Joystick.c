@@ -267,15 +267,6 @@ void HID_Task(void) {
 // Prepare the next report for the host.
 void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 
-	/* Clear the report contents */
-	memset(ReportData, 0, sizeof(USB_JoystickReport_Input_t));
-    ReportData->LX = STICK_CENTER;
-    ReportData->LY = STICK_CENTER;
-    ReportData->RX = STICK_CENTER;
-    ReportData->RY = STICK_CENTER;
-    ReportData->HAT = HAT_CENTER;
-
-
     // Repeat REPS times the last report
     if (reps > 0)
     {
@@ -283,6 +274,14 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
         reps--;
         return;
     }
+
+	/* Clear the report contents */
+	memset(ReportData, 0, sizeof(USB_JoystickReport_Input_t));
+    ReportData->LX = STICK_CENTER;
+    ReportData->LY = STICK_CENTER;
+    ReportData->RX = STICK_CENTER;
+    ReportData->RY = STICK_CENTER;
+    ReportData->HAT = HAT_CENTER;
 
     // States and moves management
     switch (state) {
