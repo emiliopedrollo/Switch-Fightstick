@@ -25,6 +25,7 @@ these buttons for our use.
  */
 
 #include "Joystick.h"
+
 #define REPS 4
 
 typedef enum {
@@ -56,227 +57,222 @@ int duration = 0;
 
 static const Instruction script[] = {
         // Startup
-        { SWITCH_NONE,         HAT_CENTER,     4 },
-        { SWITCH_L + SWITCH_R, HAT_CENTER,     3 },
-        { SWITCH_NONE,         HAT_CENTER,     4 },
+        { SWITCH_NONE         , HAT_CENTER , 4 },
+        { SWITCH_L + SWITCH_R , HAT_CENTER , 3 },
+        { SWITCH_NONE         , HAT_CENTER , 4 },
         // Unpause
-        { SWITCH_PLUS,         HAT_CENTER,     3 },
+        { SWITCH_PLUS         , HAT_CENTER , 3 },
         // Run right and open door
-        { SWITCH_Y,            HAT_RIGHT,      17 },
-        { SWITCH_Y,            HAT_TOP,        3 },
-        { SWITCH_NONE,         HAT_CENTER,     20 },
+        { SWITCH_Y            , HAT_RIGHT  , 17 },
+        { SWITCH_Y            , HAT_TOP    , 3 },
+        { SWITCH_NONE         , HAT_CENTER , 20 },
         // Wait descend
-        { SWITCH_NONE,         HAT_CENTER,     90 },
+        { SWITCH_NONE         , HAT_CENTER , 90 },
         // Run right and open second door
-        { SWITCH_Y,            HAT_RIGHT,      13 },
-        { SWITCH_Y,            HAT_TOP,        3 },
-        { SWITCH_NONE,         HAT_CENTER,     50 },
-        { SWITCH_Y,            HAT_RIGHT,      12 },
+        { SWITCH_Y            , HAT_RIGHT  , 13 },
+        { SWITCH_Y            , HAT_TOP    , 3 },
+        { SWITCH_NONE         , HAT_CENTER , 50 },
+        { SWITCH_Y            , HAT_RIGHT  , 12 },
         // First Jump (Spines)
-        { SWITCH_Y + SWITCH_B, HAT_RIGHT,      4 },
-        { SWITCH_Y,            HAT_RIGHT,      2 },
-        { SWITCH_Y,            HAT_CENTER,     4 },
-        { SWITCH_Y,            HAT_RIGHT,      10 },
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 4 },
+        { SWITCH_Y            , HAT_RIGHT  , 2 },
+        { SWITCH_Y            , HAT_CENTER , 4 },
+        { SWITCH_Y            , HAT_RIGHT  , 10 },
         // Second Jump (To First P-Switch)
-        { SWITCH_Y + SWITCH_B, HAT_CENTER,     4 },
-        { SWITCH_Y + SWITCH_B, HAT_RIGHT,      4 },
-        { SWITCH_Y,            HAT_RIGHT,      1 },
-        { SWITCH_NONE,         HAT_CENTER,     5 },
+        { SWITCH_Y + SWITCH_B , HAT_CENTER , 4 },
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 4 },
+        { SWITCH_Y            , HAT_RIGHT  , 1 },
+        { SWITCH_NONE         , HAT_CENTER , 5 },
         // 1st P-Switch Jump (To Second P-Switch)
-        { SWITCH_Y + SWITCH_B, HAT_RIGHT,      16 },
-        { SWITCH_Y,            HAT_CENTER,     2 },
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 16 },
+        { SWITCH_Y            , HAT_CENTER , 2 },
         // 2nd P-Switch (To platform)
-        { SWITCH_Y + SWITCH_B, HAT_LEFT,       7 },
-        { SWITCH_Y,            HAT_CENTER,     9 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 7 },
+        { SWITCH_Y            , HAT_CENTER , 9 },
         // 1st Jump from 1st Platform
-        { SWITCH_Y + SWITCH_B, HAT_CENTER,     3 },
-        { SWITCH_Y + SWITCH_B, HAT_LEFT,       6 },
-        { SWITCH_Y,            HAT_LEFT,       4 },
-        { SWITCH_Y,            HAT_RIGHT,      8 },
-        { SWITCH_Y,            HAT_CENTER,     6 },
+        { SWITCH_Y + SWITCH_B , HAT_CENTER , 3 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 6 },
+        { SWITCH_Y            , HAT_LEFT   , 4 },
+        { SWITCH_Y            , HAT_RIGHT  , 8 },
+        { SWITCH_Y            , HAT_CENTER , 6 },
         // 2nd Jump from 1st Platform
-        { SWITCH_Y + SWITCH_B, HAT_LEFT,       9 },
-        { SWITCH_PLUS,         HAT_CENTER,     3 },
-        { SWITCH_NONE,         HAT_CENTER,     20 },
-        { SWITCH_PLUS,         HAT_CENTER,     3 },
-        { SWITCH_Y,            HAT_LEFT,       2 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 9 },
+        { SWITCH_PLUS         , HAT_CENTER , 3 },
+        { SWITCH_NONE         , HAT_CENTER , 20 },
+        { SWITCH_PLUS         , HAT_CENTER , 3 },
+        { SWITCH_Y            , HAT_LEFT   , 2 },
 //        { SWITCH_PLUS,         HAT_CENTER,     3 },
 //        { SWITCH_NONE,         HAT_CENTER,     20 },
 //        { SWITCH_PLUS,         HAT_CENTER,     3 },
-        { SWITCH_Y + SWITCH_B, HAT_LEFT,       8 },
-        { SWITCH_PLUS,         HAT_CENTER,     3 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 8 },
+        { SWITCH_PLUS         , HAT_CENTER , 3 },
 //        { SWITCH_Y + SWITCH_B, HAT_BOTTOM,     40 },
 //        { SWITCH_NONE,         HAT_RIGHT,      2 },
 
         // Future me problem
-        { SWITCH_NONE,         HAT_CENTER,     200 },
+        { SWITCH_NONE         , HAT_CENTER , 200 },
 };
 
 // Main entry point.
 int main(void) {
-	// We'll start by performing hardware and peripheral setup.
-	SetupHardware();
-	// We'll then enable global interrupts for our use.
-	GlobalInterruptEnable();
-	// Once that's done, we'll enter an infinite loop.
-	for (;;)
-	{
-		// We need to run our task to process and deliver data for our IN and OUT endpoints.
-		HID_Task();
-		// We also need to run the main USB management task.
-		USB_USBTask();
-	}
+    // We'll start by performing hardware and peripheral setup.
+    SetupHardware();
+    // We'll then enable global interrupts for our use.
+    GlobalInterruptEnable();
+    // Once that's done, we'll enter an infinite loop.
+    for (;;) {
+        // We need to run our task to process and deliver data for our IN and OUT endpoints.
+        HID_Task();
+        // We also need to run the main USB management task.
+        USB_USBTask();
+    }
 }
 
 // Configures hardware and peripherals, such as the USB peripherals.
 void SetupHardware(void) {
-	// We need to disable watchdog if enabled by bootloader/fuses.
-	MCUSR &= ~(1 << WDRF);
-	wdt_disable();
+    // We need to disable watchdog if enabled by bootloader/fuses.
+    MCUSR &= ~(1 << WDRF);
+    wdt_disable();
 
-	// We need to disable clock division before initializing the USB hardware.
-	clock_prescale_set(clock_div_1);
-	// We can then initialize our hardware and peripherals, including the USB stack.
+    // We need to disable clock division before initializing the USB hardware.
+    clock_prescale_set(clock_div_1);
+    // We can then initialize our hardware and peripherals, including the USB stack.
 
-	// Both PORTD and PORTB will be used for handling the buttons and stick.
-    #ifdef USE_PORTS
-	DDRD  &= ~0xFF;
-	PORTD |=  0xFF;
+    // Both PORTD and PORTB will be used for handling the buttons and stick.
+#ifdef USE_PORTS
+    DDRD  &= ~0xFF;
+    PORTD |=  0xFF;
 
-	DDRB  &= ~0xFF;
-	PORTB |=  0xFF;
-    #endif
-	// The USB stack should be initialized last.
-	USB_Init();
+    DDRB  &= ~0xFF;
+    PORTB |=  0xFF;
+#endif
+    // The USB stack should be initialized last.
+    USB_Init();
 }
 
 // Fired to indicate that the device is enumerating.
 void EVENT_USB_Device_Connect(void) {
-	// We can indicate that we're enumerating here (via status LEDs, sound, etc.).
+    // We can indicate that we're enumerating here (via status LEDs, sound, etc.).
 }
 
 // Fired to indicate that the device is no longer connected to a host.
 void EVENT_USB_Device_Disconnect(void) {
-	// We can indicate that our device is not ready (via status LEDs, sound, etc.).
+    // We can indicate that our device is not ready (via status LEDs, sound, etc.).
 }
 
 // Fired when the host set the current configuration of the USB device after enumeration.
 void EVENT_USB_Device_ConfigurationChanged(void) {
-	bool ConfigSuccess = true;
+    bool ConfigSuccess = true;
 
-	// We setup the HID report endpoints.
-	ConfigSuccess &= Endpoint_ConfigureEndpoint(JOYSTICK_OUT_EPADDR, EP_TYPE_INTERRUPT, JOYSTICK_EPSIZE, 1);
-	ConfigSuccess &= Endpoint_ConfigureEndpoint(JOYSTICK_IN_EPADDR, EP_TYPE_INTERRUPT, JOYSTICK_EPSIZE, 1);
+    // We setup the HID report endpoints.
+    ConfigSuccess &= Endpoint_ConfigureEndpoint(JOYSTICK_OUT_EPADDR, EP_TYPE_INTERRUPT, JOYSTICK_EPSIZE, 1);
+    ConfigSuccess &= Endpoint_ConfigureEndpoint(JOYSTICK_IN_EPADDR, EP_TYPE_INTERRUPT, JOYSTICK_EPSIZE, 1);
 
-	// We can read ConfigSuccess to indicate a success or failure at this point.
+    // We can read ConfigSuccess to indicate a success or failure at this point.
 }
 
 // Process control requests sent to the device from the USB host.
 void EVENT_USB_Device_ControlRequest(void) {
-	// We can handle two control requests: a GetReport and a SetReport.
-    #ifdef CONTROL_REQUEST
-	switch (USB_ControlRequest.bRequest)
-	{
-		// GetReport is a request for data from the device.
-		case HID_REQ_GetReport:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				// We'll create an empty report.
-				USB_JoystickReport_Input_t JoystickInputData;
-				// We'll then populate this report with what we want to send to the host.
-				GetNextReport(&JoystickInputData);
-				// Since this is a control endpoint, we need to clear up the SETUP packet on this endpoint.
-				Endpoint_ClearSETUP();
-				// Once populated, we can output this data to the host. We do this by first writing the data to the control stream.
-				Endpoint_Write_Control_Stream_LE(&JoystickInputData, sizeof(JoystickInputData));
-				// We then acknowledge an OUT packet on this endpoint.
-				Endpoint_ClearOUT();
-			}
+    // We can handle two control requests: a GetReport and a SetReport.
+#ifdef CONTROL_REQUEST
+    switch (USB_ControlRequest.bRequest)
+    {
+        // GetReport is a request for data from the device.
+        case HID_REQ_GetReport:
+            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
+            {
+                // We'll create an empty report.
+                USB_JoystickReport_Input_t JoystickInputData;
+                // We'll then populate this report with what we want to send to the host.
+                GetNextReport(&JoystickInputData);
+                // Since this is a control endpoint, we need to clear up the SETUP packet on this endpoint.
+                Endpoint_ClearSETUP();
+                // Once populated, we can output this data to the host. We do this by first writing the data to the control stream.
+                Endpoint_Write_Control_Stream_LE(&JoystickInputData, sizeof(JoystickInputData));
+                // We then acknowledge an OUT packet on this endpoint.
+                Endpoint_ClearOUT();
+            }
 
-			break;
-		case HID_REQ_SetReport:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				// We'll create a place to store our data received from the host.
-				USB_JoystickReport_Output_t JoystickOutputData;
-				// Since this is a control endpoint, we need to clear up the SETUP packet on this endpoint.
-				Endpoint_ClearSETUP();
-				// With our report available, we read data from the control stream.
-				Endpoint_Read_Control_Stream_LE(&JoystickOutputData, sizeof(JoystickOutputData));
-				// We then send an IN packet on this endpoint.
-				Endpoint_ClearIN();
-			}
+            break;
+        case HID_REQ_SetReport:
+            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
+            {
+                // We'll create a place to store our data received from the host.
+                USB_JoystickReport_Output_t JoystickOutputData;
+                // Since this is a control endpoint, we need to clear up the SETUP packet on this endpoint.
+                Endpoint_ClearSETUP();
+                // With our report available, we read data from the control stream.
+                Endpoint_Read_Control_Stream_LE(&JoystickOutputData, sizeof(JoystickOutputData));
+                // We then send an IN packet on this endpoint.
+                Endpoint_ClearIN();
+            }
 
-			break;
-	}
-    #endif
+            break;
+    }
+#endif
 }
 
 // Process and deliver data from IN and OUT endpoints.
 void HID_Task(void) {
-	// If the device isn't connected and properly configured, we can't do anything here.
-	if (USB_DeviceState != DEVICE_STATE_Configured)
-	  return;
+    // If the device isn't connected and properly configured, we can't do anything here.
+    if (USB_DeviceState != DEVICE_STATE_Configured)
+        return;
 
-	// We'll start with the OUT endpoint.
-	Endpoint_SelectEndpoint(JOYSTICK_OUT_EPADDR);
-	// We'll check to see if we received something on the OUT endpoint.
-	if (Endpoint_IsOUTReceived())
-	{
-		// If we did, and the packet has data, we'll react to it.
-		if (Endpoint_IsReadWriteAllowed())
-		{
-			// We'll create a place to store our data received from the host.
-			USB_JoystickReport_Output_t JoystickOutputData;
-			// We'll then take in that data, setting it up in our storage.
-            #ifdef LOOP_STREAM
+    // We'll start with the OUT endpoint.
+    Endpoint_SelectEndpoint(JOYSTICK_OUT_EPADDR);
+    // We'll check to see if we received something on the OUT endpoint.
+    if (Endpoint_IsOUTReceived()) {
+        // If we did, and the packet has data, we'll react to it.
+        if (Endpoint_IsReadWriteAllowed()) {
+            // We'll create a place to store our data received from the host.
+            USB_JoystickReport_Output_t JoystickOutputData;
+            // We'll then take in that data, setting it up in our storage.
+#ifdef LOOP_STREAM
             while(Endpoint_Read_Stream_LE(&JoystickOutputData, sizeof(JoystickOutputData), NULL) != ENDPOINT_RWSTREAM_NoError);
-            #else
+#else
             Endpoint_Read_Stream_LE(&JoystickOutputData, sizeof(JoystickOutputData), NULL);
-            #endif
-			// At this point, we can react to this data.
-			// However, since we're not doing anything with this data, we abandon it.
-		}
-		// Regardless of whether we reacted to the data, we acknowledge an OUT packet on this endpoint.
-		Endpoint_ClearOUT();
-	}
+#endif
+            // At this point, we can react to this data.
+            // However, since we're not doing anything with this data, we abandon it.
+        }
+        // Regardless of whether we reacted to the data, we acknowledge an OUT packet on this endpoint.
+        Endpoint_ClearOUT();
+    }
 
-	// We'll then move on to the IN endpoint.
-	Endpoint_SelectEndpoint(JOYSTICK_IN_EPADDR);
-	// We first check to see if the host is ready to accept data.
-	if (Endpoint_IsINReady())
-	{
-		// We'll create an empty report.
-		USB_JoystickReport_Input_t JoystickInputData;
-		// We'll then populate this report with what we want to send to the host.
-		GetNextReport(&JoystickInputData);
-		// Once populated, we can output this data to the host. We do this by first writing the data to the control stream.
-        #ifdef LOOP_STREAM
+    // We'll then move on to the IN endpoint.
+    Endpoint_SelectEndpoint(JOYSTICK_IN_EPADDR);
+    // We first check to see if the host is ready to accept data.
+    if (Endpoint_IsINReady()) {
+        // We'll create an empty report.
+        USB_JoystickReport_Input_t JoystickInputData;
+        // We'll then populate this report with what we want to send to the host.
+        GetNextReport(&JoystickInputData);
+        // Once populated, we can output this data to the host. We do this by first writing the data to the control stream.
+#ifdef LOOP_STREAM
         while(Endpoint_Write_Stream_LE(&JoystickInputData, sizeof(JoystickInputData), NULL) != ENDPOINT_RWSTREAM_NoError);
-        #else
+#else
         Endpoint_Write_Stream_LE(&JoystickInputData, sizeof(JoystickInputData), NULL);
-        #endif
-		// We then send an IN packet on this endpoint.
-		Endpoint_ClearIN();
+#endif
+        // We then send an IN packet on this endpoint.
+        Endpoint_ClearIN();
 
-		/* Clear the report data afterwards */
-		// memset(&JoystickInputData, 0, sizeof(JoystickInputData));
-	}
+        /* Clear the report data afterwards */
+        // memset(&JoystickInputData, 0, sizeof(JoystickInputData));
+    }
 }
 
 // Prepare the next report for the host.
-void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
+void GetNextReport(USB_JoystickReport_Input_t *const ReportData) {
 
     // Repeat REPS times the last report
-    if (reps > 0)
-    {
+    if (reps > 0) {
         memcpy(ReportData, &last_report, sizeof(USB_JoystickReport_Input_t));
         reps--;
         return;
     }
 
-	/* Clear the report contents */
-	memset(ReportData, 0, sizeof(USB_JoystickReport_Input_t));
+    /* Clear the report contents */
+    memset(ReportData, 0, sizeof(USB_JoystickReport_Input_t));
     ReportData->LX = STICK_CENTER;
     ReportData->LY = STICK_CENTER;
     ReportData->RX = STICK_CENTER;
@@ -301,12 +297,12 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 
             duration++;
 
-            if (duration >= script[step].duration){
+            if (duration >= script[step].duration) {
                 step++;
                 duration = 0;
             }
 
-            if (step >= (int)( sizeof(script) / sizeof(script[0]))) // end of script
+            if (step >= (int) (sizeof(script) / sizeof(script[0]))) // end of script
             {
                 return;
             }
