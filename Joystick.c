@@ -57,60 +57,66 @@ int duration = 0;
 
 static const Instruction script[] = {
         // Startup
-        { SWITCH_NONE         , HAT_CENTER , 4 },
-        { SWITCH_L + SWITCH_R , HAT_CENTER , 3 },
-        { SWITCH_NONE         , HAT_CENTER , 4 },
+        { SWITCH_NONE         , HAT_CENTER       , 4 },
+        { SWITCH_L + SWITCH_R , HAT_CENTER       , 3 },
+        { SWITCH_NONE         , HAT_CENTER       , 4 },
         // Unpause
-        { SWITCH_PLUS         , HAT_CENTER , 3 },
+        { SWITCH_PLUS         , HAT_CENTER       , 3 },
         // Run right and open door
-        { SWITCH_Y            , HAT_RIGHT  , 17 },
-        { SWITCH_Y            , HAT_TOP    , 3 },
-        { SWITCH_NONE         , HAT_CENTER , 20 },
+        { SWITCH_Y            , HAT_RIGHT        , 17 },
+        { SWITCH_Y            , HAT_TOP          , 3 },
+        { SWITCH_NONE         , HAT_CENTER       , 20 },
         // Wait descend
-        { SWITCH_NONE         , HAT_CENTER , 90 },
+        { SWITCH_NONE         , HAT_CENTER       , 90 },
         // Run right and open second door
-        { SWITCH_Y            , HAT_RIGHT  , 13 },
-        { SWITCH_Y            , HAT_TOP    , 3 },
-        { SWITCH_NONE         , HAT_CENTER , 50 },
-        { SWITCH_Y            , HAT_RIGHT  , 12 },
+        { SWITCH_Y            , HAT_RIGHT        , 15 },
+        { SWITCH_Y            , HAT_TOP          , 3 },
+        { SWITCH_NONE         , HAT_CENTER       , 50 },
+        { SWITCH_Y            , HAT_RIGHT        , 13 },
+        { SWITCH_Y            , HAT_BOTTOM_RIGHT , 1 },
         // First Jump (Spines)
-        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 4 },
-        { SWITCH_Y            , HAT_RIGHT  , 2 },
-        { SWITCH_Y            , HAT_CENTER , 4 },
-        { SWITCH_Y            , HAT_RIGHT  , 10 },
+        { SWITCH_Y + SWITCH_B , HAT_BOTTOM_RIGHT , 4 },
+        { SWITCH_Y            , HAT_BOTTOM_RIGHT , 2 },
+        { SWITCH_Y            , HAT_BOTTOM       , 4 },
+        { SWITCH_Y            , HAT_RIGHT        , 10 },
         // Second Jump (To First P-Switch)
-        { SWITCH_Y + SWITCH_B , HAT_CENTER , 4 },
-        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 4 },
-        { SWITCH_Y            , HAT_RIGHT  , 1 },
-        { SWITCH_NONE         , HAT_CENTER , 5 },
+        { SWITCH_Y + SWITCH_B , HAT_CENTER       , 4 },
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT        , 4 },
+        { SWITCH_Y            , HAT_RIGHT        , 1 },
+        { SWITCH_NONE         , HAT_CENTER       , 5 },
         // 1st P-Switch Jump (To Second P-Switch)
-        { SWITCH_Y + SWITCH_B , HAT_RIGHT  , 16 },
-        { SWITCH_Y            , HAT_CENTER , 2 },
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT        , 16 },
+        { SWITCH_Y            , HAT_CENTER       , 4 },
         // 2nd P-Switch (To platform)
-        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 7 },
-        { SWITCH_Y            , HAT_CENTER , 9 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 8 },
+        { SWITCH_Y            , HAT_CENTER       , 9 },
         // 1st Jump from 1st Platform
-        { SWITCH_Y + SWITCH_B , HAT_CENTER , 3 },
-        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 6 },
-        { SWITCH_Y            , HAT_LEFT   , 4 },
-        { SWITCH_Y            , HAT_RIGHT  , 8 },
-        { SWITCH_Y            , HAT_CENTER , 6 },
+        { SWITCH_Y + SWITCH_B , HAT_CENTER       , 4 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 5 },
+        { SWITCH_Y            , HAT_LEFT         , 4 },
+        { SWITCH_Y            , HAT_RIGHT        , 8 },
+        { SWITCH_Y            , HAT_CENTER       , 7 },
         // 2nd Jump from 1st Platform
-        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 9 },
-        { SWITCH_PLUS         , HAT_CENTER , 3 },
-        { SWITCH_NONE         , HAT_CENTER , 20 },
-        { SWITCH_PLUS         , HAT_CENTER , 3 },
-        { SWITCH_Y            , HAT_LEFT   , 2 },
-//        { SWITCH_PLUS,         HAT_CENTER,     3 },
-//        { SWITCH_NONE,         HAT_CENTER,     20 },
-//        { SWITCH_PLUS,         HAT_CENTER,     3 },
-        { SWITCH_Y + SWITCH_B , HAT_LEFT   , 8 },
-        { SWITCH_PLUS         , HAT_CENTER , 3 },
-//        { SWITCH_Y + SWITCH_B, HAT_BOTTOM,     40 },
-//        { SWITCH_NONE,         HAT_RIGHT,      2 },
-
-        // Future me problem
-        { SWITCH_NONE         , HAT_CENTER , 200 },
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 8 },
+        { SWITCH_Y            , HAT_LEFT         , 11 },
+        // Jump from 2nd platform
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 16 },
+        { SWITCH_Y            , HAT_LEFT         , 4 },
+        // Jump from Shell
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 50 },
+        { SWITCH_Y            , HAT_RIGHT        , 18 },
+        // 1st Jump from red block into question block
+        { SWITCH_Y + SWITCH_B , HAT_RIGHT        , 1 },
+        { SWITCH_Y            , HAT_RIGHT        , 4 },
+        { SWITCH_Y            , HAT_LEFT         , 4 },
+        // 2st Jump from red block into higher level
+        { SWITCH_Y + SWITCH_B , HAT_LEFT         , 25 },
+        { SWITCH_PLUS         , HAT_CENTER       , 3 },
+//
+//        // Do shit
+        { SWITCH_NONE         , HAT_CENTER       , 0xFF },
+        { SWITCH_NONE         , HAT_CENTER       , 0xFF },
+        { SWITCH_NONE         , HAT_CENTER       , 0xFF },
 };
 
 // Main entry point.
