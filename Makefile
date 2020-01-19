@@ -35,3 +35,9 @@ include $(LUFA_PATH)/Build/lufa_dfu.mk
 include $(LUFA_PATH)/Build/lufa_hid.mk
 include $(LUFA_PATH)/Build/lufa_avrdude.mk
 include $(LUFA_PATH)/Build/lufa_atprogram.mk
+
+
+flash: all
+	sudo dfu-programmer $(MCU) erase
+	sudo dfu-programmer $(MCU) flash $(TARGET).hex
+	sudo dfu-programmer $(MCU) reset
